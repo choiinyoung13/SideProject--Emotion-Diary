@@ -2,9 +2,11 @@ import { useMemo, useState } from "react";
 import Button from "./Button";
 import DiaryItem from "./DiaryItem";
 import "./DiaryList.css";
+import { useNavigate } from "react-router-dom";
 
 export default function DiaryList({ data, date }) {
   const [filter, setFilter] = useState("latest");
+  const navigate = useNavigate();
 
   const filteredData = useMemo(() => {
     // 1. 먼저 날짜로 필터링
@@ -43,7 +45,12 @@ export default function DiaryList({ data, date }) {
           <option value="latest">최신순</option>
           <option value="oldest">오랜된 순</option>
         </select>
-        <Button className="menu_button" text="새 일기 쓰기" type="POSITIVE" />
+        <Button
+          className="menu_button"
+          text="새 일기 쓰기"
+          type="POSITIVE"
+          onClick={() => navigate("/new")}
+        />
       </div>
       <div className="diary_list_wrapper">
         {filteredData.map((item) => (
