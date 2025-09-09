@@ -1,10 +1,12 @@
 import Header from "../components/Header";
 import Button from "../components/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DiaryList from "../components/DiaryList";
+import { DiaryStateContext } from "../App";
 
-export default function Home({ data }) {
+export default function Home() {
   const [date, setDate] = useState(new Date());
+  const data = useContext(DiaryStateContext);
 
   const onIncreaseMonth = () => {
     setDate(new Date(date.getFullYear(), date.getMonth() + 1));

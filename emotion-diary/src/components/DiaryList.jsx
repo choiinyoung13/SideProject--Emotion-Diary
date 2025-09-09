@@ -21,9 +21,9 @@ export default function DiaryList({ data, date }) {
     // 2. 정렬 적용
     const sorted = [...filtered].sort((a, b) => {
       if (filter === "latest") {
-        return new Date(a.createdDate) - new Date(b.createdDate); // 최신순
+        return new Date(b.createdDate) - new Date(a.createdDate); // 최신순
       } else {
-        return new Date(b.createdDate) - new Date(a.createdDate); // 오래된 순
+        return new Date(a.createdDate) - new Date(b.createdDate); // 오래된 순
       }
     });
 
