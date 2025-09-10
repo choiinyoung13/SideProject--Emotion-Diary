@@ -87,10 +87,10 @@ function App() {
   };
 
   // 일기 수정
-  const onUpdateDiary = (id, createdDate, content, emotionId) => {
+  const onUpdateDiary = (id, createdDate, emotionId, content) => {
     dispatch({
       type: "UPDATE_DIARY",
-      data: { id, createdDate, content, emotionId },
+      data: { id, createdDate, emotionId, content },
     });
   };
 

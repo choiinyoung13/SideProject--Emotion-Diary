@@ -7,11 +7,15 @@ export default function Diary({ data }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const diary = data.find((item) => item.id === parseInt(id));
+  const diary = data.find((item) => String(item.id) === String(id));
   const date = new Date(diary.createdDate);
 
   const onClickBack = () => {
     navigate("/");
+  };
+
+  const onClickEdit = () => {
+    navigate(`/edit/${id}`);
   };
 
   return (
@@ -23,7 +27,9 @@ export default function Diary({ data }) {
         leftChild={
           <Button text="< 뒤로가기" type="DEFAULT" onClick={onClickBack} />
         }
-        rightChild={<Button text="수정하기" type="DEFAULT" />}
+        rightChild={
+          <Button text="수정하기" type="DEFAULT" onClick={onClickEdit} />
+        }
       />
       <Viewer diary={diary} />
     </>

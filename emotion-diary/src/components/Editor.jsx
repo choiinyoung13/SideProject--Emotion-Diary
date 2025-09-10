@@ -1,13 +1,50 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { getEmotionImage } from "../utiles/get-emotion-image";
 import "./Editor.css";
 import Button from "./Button";
+import { useNavigate, useParams } from "react-router-dom";
+import { DiaryDispatchContext, DiaryStateContext } from "../App";
 
-export default function Editor() {
+export default function Editor({ type }) {
+  const navigate = useNavigate();
+  const { onCreateDiary, onUpdateDiary } = useContext(DiaryDispatchContext);
+  const data = useContext(DiaryStateContext);
   const [selectedEmotionId, setSelectedEmotionId] = useState(null);
+  const [content, setContent] = useState("");
+  const [date, setDate] = useState("");
+  const { id } = useParams();
+
+  const diary = data.find((item) => String(item.id) === String(id));
+
+  const onChangeDate = (e) => {
+    setDate(e.target.value);
+  };
 
   const onClickEmotion = (emotionId) => {
     setSelectedEmotionId(emotionId);
+  };
+
+  const onChangeContent = (e) => {
+    setContent(e.target.value);
+  };
+
+  const onClickCreate = () => {
+    onCreateDiary(date, selectedEmotionId, content);
+    navigate("/");
+  };
+
+  const onClickUpdate = () => {
+    onUpdateDiary(
+      id,
+      date ? date : diary.createdDate,
+      selectedEmotionId ? selectedEmotionId : diary.emotionId,
+      content ? content : diary.content
+    );
+    navigate("/");
+  };
+
+  const onClickCancel = () => {
+    navigate("/");
   };
 
   return (
@@ -15,7 +52,12 @@ export default function Editor() {
       <section className="date_section">
         <div className="title">오늘의 날짜</div>
         <div>
-          <input className="date_input" type="date" />
+          <input
+            className="date_input"
+            type="date"
+            value={date}
+            onChange={onChangeDate}
+          />
         </div>
       </section>
       <section className="emotion_section">
@@ -70,11 +112,32 @@ export default function Editor() {
       </section>
       <section className="content_section">
         <div className="title">오늘의 일기</div>
-        <textarea className="content_input" placeholder="오늘은 어땠나요?" />
+        <textarea
+          className="content_input"
+          placeholder="오늘은 어땠나요?"
+          value={content}
+          onChange={onChangeContent}
+        />
       </section>
       <section className="button_section">
-        <Button text="취소하기" type="DEFAULT" />
-        <Button text="작성 완료" type="POSITIVE" />
+        <Button text="취소하기" type="DEFAULT" onClick={onClickCancel} />
+
+        {type === "CREATE" && (
+          <Button
+            text="작성 완료"
+            type="POSITIVE"
+            onClick={onClickCreate}
+            disabled={!selectedEmotionId || !content || !date}
+          />
+        )}
+        {type === "UPDATE" && (
+          <Button
+            text="수정 완료"
+            type="POSITIVE"
+            onClick={onClickUpdate}
+            disabled={!selectedEmotionId && !content && !date}
+          />
+        )}
       </section>
     </div>
   );

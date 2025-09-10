@@ -12,6 +12,7 @@ export default function DiaryItem({ id, emotionId, content, createdDate }) {
 
   const onClickEdit = (e) => {
     e.stopPropagation();
+    navigate(`/edit/${id}`);
   };
 
   return (

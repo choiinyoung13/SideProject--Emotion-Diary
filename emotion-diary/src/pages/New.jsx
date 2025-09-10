@@ -18,7 +18,7 @@ export default function New() {
           <Button text="< 뒤로가기" type="DEFAULT" onClick={onClickBack} />
         }
       />
-      <Editor />
+      <Editor type="CREATE" />
     </div>
   );
 }
