@@ -23,7 +23,8 @@
 
 .emotion_item_container {
   display: flex;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 15px;
 }
 
 .emotion_item {
@@ -37,10 +38,23 @@
   background-color: rgb(236, 236, 236);
   font-size: 20px;
   cursor: pointer;
+  width: 100px;
+}
+
+@media (max-width: 550px) {
+  .emotion_item span {
+    display: none;
+  }
 }
 
 .emotion_item img {
   width: 60%;
+}
+
+@media (max-width: 550px) {
+  .emotion_item img {
+    width: 90%;
+  }
 }
 
 .emotion_type_1.selected {
