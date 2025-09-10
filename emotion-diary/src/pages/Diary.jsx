@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import Viewer from "../components/Viewer";
@@ -8,8 +9,20 @@ export default function Diary({ data }) {
   const navigate = useNavigate();
 
   const diary = data.find((item) => String(item.id) === String(id));
-  const date = new Date(diary.createdDate);
 
+  useEffect(() => {
+    if (!diary) {
+      alert("일기가 존재하지 않습니다.");
+      navigate("/", { replace: true });
+    }
+  }, [diary, navigate]);
+
+  // diary가 없으면 렌더링하지 않음
+  if (!diary) {
+    return null;
+  }
+
+  const date = new Date(diary.createdDate);
   const onClickBack = () => {
     navigate("/");
   };

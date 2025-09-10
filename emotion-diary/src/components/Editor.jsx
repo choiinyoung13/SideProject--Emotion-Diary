@@ -2,19 +2,15 @@ import { useContext, useState } from "react";
 import { getEmotionImage } from "../utiles/get-emotion-image";
 import "./Editor.css";
 import Button from "./Button";
-import { useNavigate, useParams } from "react-router-dom";
-import { DiaryDispatchContext, DiaryStateContext } from "../App";
+import { useNavigate } from "react-router-dom";
+import { DiaryDispatchContext } from "../App";
 
-export default function Editor({ type }) {
+export default function Editor({ type, data }) {
   const navigate = useNavigate();
   const { onCreateDiary, onUpdateDiary } = useContext(DiaryDispatchContext);
-  const data = useContext(DiaryStateContext);
   const [selectedEmotionId, setSelectedEmotionId] = useState(null);
   const [content, setContent] = useState("");
   const [date, setDate] = useState("");
-  const { id } = useParams();
-
-  const diary = data.find((item) => String(item.id) === String(id));
 
   const onChangeDate = (e) => {
     setDate(e.target.value);
@@ -35,10 +31,10 @@ export default function Editor({ type }) {
 
   const onClickUpdate = () => {
     onUpdateDiary(
-      id,
-      date ? date : diary.createdDate,
-      selectedEmotionId ? selectedEmotionId : diary.emotionId,
-      content ? content : diary.content
+      data.id,
+      date ? date : data.createdDate,
+      selectedEmotionId ? selectedEmotionId : data.emotionId,
+      content ? content : data.content
     );
     navigate("/", { replace: true });
   };
