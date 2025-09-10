@@ -30,7 +30,7 @@ export default function Editor({ type }) {
 
   const onClickCreate = () => {
     onCreateDiary(date, selectedEmotionId, content);
-    navigate("/");
+    navigate("/", { replace: true });
   };
 
   const onClickUpdate = () => {
@@ -40,11 +40,11 @@ export default function Editor({ type }) {
       selectedEmotionId ? selectedEmotionId : diary.emotionId,
       content ? content : diary.content
     );
-    navigate("/");
+    navigate("/", { replace: true });
   };
 
   const onClickCancel = () => {
-    navigate("/");
+    navigate("/", { replace: true });
   };
 
   return (

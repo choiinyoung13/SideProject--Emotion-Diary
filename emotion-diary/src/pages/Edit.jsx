@@ -14,8 +14,10 @@ export default function Edit() {
     navigate("/");
   };
   const onClickDelete = () => {
-    onDeleteDiary(id);
-    navigate("/");
+    if (window.confirm("정말 삭제하시겠습니까? 삭제하면 복구되지 않아요!")) {
+      onDeleteDiary(id);
+      navigate("/");
+    }
   };
 
   return (
