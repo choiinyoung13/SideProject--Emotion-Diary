@@ -1,12 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Editor from "../components/Editor";
 import Header from "../components/Header";
 import Button from "../components/Button";
+import { useContext } from "react";
+import { DiaryDispatchContext } from "../App";
 
 export default function Edit() {
   const navigate = useNavigate();
+  const { onDeleteDiary } = useContext(DiaryDispatchContext);
+  const { id } = useParams();
 
   const onClickBack = () => {
+    navigate("/");
+  };
+  const onClickDelete = () => {
+    onDeleteDiary(id);
     navigate("/");
   };
 
@@ -18,7 +26,7 @@ export default function Edit() {
           <Button text="< 뒤로가기" type="DEFAULT" onClick={onClickBack} />
         }
         rightChild={
-          <Button text="삭제하기" type="NEGATIVE" onClick={onClickBack} />
+          <Button text="삭제하기" type="NEGATIVE" onClick={onClickDelete} />
         }
       />
       <Editor type="UPDATE" />
